@@ -1,0 +1,22 @@
+[tools]
+node = "24.21.0"
+
+[tasks.setup]
+description = "Install the locked project-local renderer dependencies"
+run = "npm ci"
+
+[tasks.dev]
+description = "Serve the interactive KB at http://127.0.0.1:5173/kb"
+run = "npm run dev"
+
+[tasks.build]
+description = "Build the interactive site and portable rendered HTML pages"
+run = "npm run build"
+
+[tasks.render]
+description = "Generate portable HTML from the actual Svelte pages"
+run = "npm run render"
+
+[tasks.preview]
+description = "Serve the built interactive site locally"
+run = "npm run preview"

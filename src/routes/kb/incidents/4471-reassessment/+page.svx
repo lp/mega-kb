@@ -1,0 +1,88 @@
+---
+layout: runbook
+title: '#4471 reassessed · two date defects, not one'
+owner: lp with omp
+status: reviewed
+reviewed: '2026-10-28'
+signature: 'omp (MEGA.dev harness for lp)'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import ReviewEvidence from '#lib/kb/ReviewEvidence.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The [original incident page](/kb/incidents/4471) says “One issue, one fix queued.” Its rendered
+cause table contradicts that statement: distinct input paths produce distinct defects. Keep
+[the shared-parser issue](https://github.com/lp/mega-kb/issues/1) and
+[the booking-v3 hint issue](https://github.com/lp/mega-kb/issues/2) separate. Neither is fixed
+merely because the desk marked the merged ticket known.
+
+This review uses the KB export dated 2026-10-04. The desk continues working: these are snapshot
+counts, not a claim about today's live queue. Refresh the export and recalculate before using
+these counts for a later handoff. A new report with an unknown tenant must remain unplaced until
+the directory supplies enough evidence; a subject match is not permission to merge it.
+
+## What the running KB shows
+
+<CauseTable ticket={4471} />
+
+This unchanged exported table describes the desk's original filing: “no ticket of its own”
+means no separate ticket in that export. The new GitHub issues linked above and below provide
+the separate tracking that was missing.
+
+The shared parser always reads month first. Day-first tenant dates entering that path can
+reverse month and day. In contrast, booking-v3 prints `MM/DD/YYYY`, and its tenant-order form can
+read a date entered by that hint in the opposite order. Changing only the shared parser does
+not repair the hint/form contract.
+
+For example, `R-41205` is from morrow.tax (`fr-FR`, booking-v2, app) despite an `en-US` browser and
+an intake guess of hint. `R-41230` is from copper.studio (`es-ES`, booking-v3, form) despite an
+intake guess of parser. Read the tenant directory and the entry channel, not the intake guess.
+`causes.ts` asks `Intl.DateTimeFormat` for date order instead of maintaining a country list.
+
+<ReviewEvidence />
+
+## The queue did not begin when the desk merged it
+
+<QueueTimeline ticket={4471} />
+
+The two series measure different events. Received dates describe incoming reports; merge dates
+describe filing. A large merge batch cannot date the beginning of the incident. Continued reports
+also make “known” a workflow label, not evidence of resolution.
+
+## Why the old dedupe rule concealed the hint defect
+
+The [triage prose](/kb/triage/dedupe) and
+[accepted decision 0001](/kb/decisions/0001-dedupe-by-subject) say to merge by normalized subject.
+Their old review date triggers the layout's stale warning. More importantly, the live component
+below computes cause equality, not subject equality. The written rule and running behavior disagree.
+
+<DedupeExplorer />
+
+The examples show both failure directions: the same subject can describe different causes,
+and different subjects can describe the same cause. Alder Physio's form and app reports share
+a subject but enter different defect paths. App versus email at Kettle Books uses different
+subjects but the same parser cause. With no tenant on file, the component declines to establish
+a common cause.
+
+[Decision 0002](/kb/decisions/0002-dedupe-by-cause) replaces the subject-only rule for this
+reassessment. Decision 0001 remains intact as an accepted historical record. Use subject matches
+only to find candidates, then check tenant locale, booking form, channel and symptom evidence.
+Merge only reports with an established common cause; keep unresolved evidence visible.
+
+## Handoff and limits
+
+The linked issues each carry their report count, scope, examples and independent fix boundary.
+Their reproductions are derived from the export's implementation and reports; production parser
+and form code were not supplied, so no production reproduction or deployed fix is claimed.
+
+The counts and membership above are computed by components from deduplicated data. The page source,
+components, exported inputs and rendered HTML are kept together so another reader can reproduce
+the evidence instead of trusting a manually copied total. The desk reference below is derived
+from this page's frontmatter signature by the supplied `RenderStamp`, not typed into the prose.
+
+<RenderStamp {signature} />

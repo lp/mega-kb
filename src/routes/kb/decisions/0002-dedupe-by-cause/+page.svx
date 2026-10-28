@@ -1,0 +1,45 @@
+---
+layout: runbook
+title: '0002 · Establish a common cause before merging'
+owner: lp with omp
+status: proposed
+reviewed: '2026-10-28'
+signature: 'omp (MEGA.dev harness for lp)'
+---
+
+<script>
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Context
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merged reports solely by normalized subject.
+The [reassessment of #4471](/kb/incidents/4471-reassessment) finds that the incident's own computed
+cause table separates a shared-parser defect from a booking-v3 hint defect. The live triage
+explorer also compares causes rather than subjects. The old accepted record is preserved;
+this proposal replaces its operational rule for the reassessment, pending desk acceptance.
+
+## Decision
+
+Use matching subjects to find candidates, not as evidence of a common problem. Look up the tenant's
+locale and booking-form version and inspect the entry channel and symptom. For the exported date
+classifier, merge only when `sameCause` establishes a non-null common cause. Keep parser and hint
+reports in separate issues even when their subjects match. Different subjects do not justify
+splitting reports when their cause is established to be the same.
+
+Unknown tenants and contradictory symptoms need investigation, not automatic merging. In
+particular, retain the timing anomalies as unresolved evidence rather than claiming that their
+filing category proves their root cause. Deduplicate export overlap by report ID before counting.
+
+## Executable examples
+
+<DedupeExplorer />
+
+## Consequences
+
+Triage must read more context than a subject line. Engineering gains separate fix scopes and
+reproducible counts. Recompute against a fresh export as the desk continues working. This page
+does not edit the accepted historical decision or claim authority to approve a support-desk policy.
+
+<RenderStamp {signature} />
