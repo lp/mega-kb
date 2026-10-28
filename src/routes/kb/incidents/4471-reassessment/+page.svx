@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 reassessed · two date defects, not one'
 owner: lp with omp
-status: reviewed
+status: closed
 reviewed: '2026-10-28'
 signature: 'omp (MEGA.dev harness for lp)'
 ---
@@ -25,6 +25,21 @@ This review uses the KB export dated 2026-10-04. The desk continues working: the
 counts, not a claim about today's live queue. Refresh the export and recalculate before using
 these counts for a later handoff. A new report with an unknown tenant must remain unplaced until
 the directory supplies enough evidence; a subject match is not permission to merge it.
+
+## Engineering update · 5 October
+
+After the initial ticket submission, the [course's desk update](https://hq.mega.dev/challenges/what-it-shows)
+reported #4471 closed on 5 October:
+
+- **Parser — FIXED:** `fix(dates): parse dd/mm for eu locales`. The parser issue is closed
+  as completed on that reported evidence.
+- **Hint — WON'T FIX:** booking-v3 form retired. The hint issue is closed as not planned;
+  retirement removes the affected form, but is not a corrected hint implementation.
+
+These are different dispositions. Closing the umbrella ticket does not mean both defects were
+fixed. Historical report counts below remain unchanged. The source export predates this update,
+and production code was not provided to independently verify the parser fix. The timing anomalies
+remain unexplained by the supplied evidence; umbrella closure does not establish their cause.
 
 ## What the running KB shows
 
