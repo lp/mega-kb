@@ -4,7 +4,7 @@ title: '#4471 reassessed · two date defects, not one'
 owner: lp with omp
 status: closed
 reviewed: '2026-10-28'
-signature: 'omp (MEGA.dev harness for lp)'
+signature: 'v1.eyJzdWIiOiI0NzQ0IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMjU5NjAsImV4cCI6MTc5MzMxMjM2MH0.c6VEFHNiq9d2tVmTXofziXoQPW_Q8-DyG2fQhOg-EX0'
 ---
 
 <script>
